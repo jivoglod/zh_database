@@ -1,29 +1,20 @@
-package com.example.geo_db;
+package com.example.database;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.LauncherActivity;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.TwoLineListItem;
 
 public class MainActivity extends AppCompatActivity
 {
-    SQLhelper sqLhelper;
+    HelperDB helperDB;
     EditText edittext1;
     EditText edittext2;
     ListView listview1;
@@ -41,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         edittext2 = findViewById(R.id.editText2);
         listview1 = findViewById(R.id.listview1);
         button1 = findViewById(R.id.button1);
-        sqLhelper = new SQLhelper(this);
+        helperDB = new HelperDB(this);
         selectall();
         button1.setOnClickListener(new View.OnClickListener()
         {
@@ -56,7 +47,7 @@ public class MainActivity extends AppCompatActivity
 
     public void selectall() {
 
-        SQLiteDatabase db = sqLhelper.getWritableDatabase();
+        SQLiteDatabase db = helperDB.getWritableDatabase();
         cursor = db.rawQuery("SELECT * FROM main;", null);
 
         String[] column = new String[] {"place", "addres"};
@@ -68,14 +59,14 @@ public class MainActivity extends AppCompatActivity
 
     public void click() {
 
-        SQLiteDatabase db = sqLhelper.getWritableDatabase();
+        SQLiteDatabase db = helperDB.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        String place = edittext1.getText().toString();
-        String addr = edittext2.getText().toString();
+        String city = edittext1.getText().toString();
+        String country = edittext2.getText().toString();
 
-        contentValues.put("place", place);
-        contentValues.put("addres", addr);
+        contentValues.put("city", city);
+        contentValues.put("country", country);
         db.insert("main", null, contentValues);
 
         selectall();

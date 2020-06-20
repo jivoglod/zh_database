@@ -1,4 +1,4 @@
-package com.example.geo_db;
+package com.example.database;
 
 import android.content.Context;
 
